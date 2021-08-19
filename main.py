@@ -3,7 +3,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 home_list = [
     "Atlas_Engineering_GOEM_Retail", "Atlas_Engineering_HP", "Atlas_Engineering_Dell", "Atlas_Engineering_Lenovo",
     "Atlas_Engineering_Microsoft", "Atlas_Production_GOEM", "Atlas_Production_HP", "Atlas_Production_Dell",
-    "Atlas_Production_Lenovo", "Atlas_Production_Microsoft",
+    "Atlas_Production_Lenovo", "Atlas_Production_Microsoft", "CalypsoX2_Engineering_GOEM",
 ]
 
 
@@ -22,6 +22,14 @@ class HomeWindow(object):
 
     def open_production_window(self):
         from bot_window_prod import Ui_OtherWindow
+        self.bot_window = QtWidgets.QMainWindow()
+        self.ui = Ui_OtherWindow()
+        self.ui.setupUi(self.bot_window)
+        self.bot_window.show()
+        MainWindow.hide()
+
+    def open_calx2_eng(self):
+        from calx2_bot_eng import Ui_OtherWindow
         self.bot_window = QtWidgets.QMainWindow()
         self.ui = Ui_OtherWindow()
         self.ui.setupUi(self.bot_window)
@@ -148,6 +156,11 @@ class HomeWindow(object):
             self.open_production_window()
             f = open(r"C:\Users\Public\log.txt", "a+")
             f.write(f"Base_fw: {home_list[9]}\n")
+            f.close()
+        elif item.text() == "CalypsoX2_Engineering_GOEM":
+            self.open_calx2_eng()
+            f = open(r"C:\Users\Public\log.txt", "a+")
+            f.write(f"Base_fw: {home_list[10]}\n")
             f.close()
         else:
             print('Please restart the program.')

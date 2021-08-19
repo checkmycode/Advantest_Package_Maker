@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import *
 
 information = {'ptb': ''}
 
+
 class Ui_OtherWindow(QDialog):
     def __init__(self):
         super().__init__()
@@ -88,14 +89,6 @@ class Ui_OtherWindow(QDialog):
                     info.append(line[9:])
                     info_stripped = [x.replace('\n', '') for x in info]
             return info_stripped
-
-    def open_progress_bar(self):
-        from progress_bar import ProgressBar
-        self.window = QtWidgets.QWidget()
-        self.ui = ProgressBar()
-        self.ui.initUI()
-        self.window.show()
-        MainWindow.hide()
 
     def click_ok(self):
         from make_custfw import MakeCustfw, WorkerThread, WorkerThread_02

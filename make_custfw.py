@@ -34,6 +34,8 @@ class MakeCustfw(QDialog):
         create.create_custfw_folder(pc_name)
         create.create_bin_folder(pc_name)
         copy_files = Copy_Files()
+        worker = WorkerThread()
+        worker.copy_bins(pc_name, path_to_bot)
         worker_02 = WorkerThread_02()
         worker_02.copy_bins(pc_name, path_to_bot)
         create.zip_folder(pc_name)
@@ -52,11 +54,56 @@ class MakeCustfw(QDialog):
         self.delete_custfw(pc_name)
         self.good_bye(pc_name, firmware)
 
+
+    def make_custfw_calx2_eng(self):
+        from copy_files import Copy_Files
+        from create_folder import Create_Folder
+        from rename_delete import RenameDelete
+        from excel import Excel
+        from bot_window_eng import Ui_OtherWindow
+
+        bot_win = Ui_OtherWindow()
+        bot_win.make_logs()
+        bot_win.get_edit_lines_info()
+        path_to_bot = str(bot_win.get_edit_lines_info()[1][1:])
+        bot_split = path_to_bot.split("\\")
+        firmware = (bot_split[-3])
+        uname = os.environ['HOMEPATH']
+        pc_name = uname.replace("\\Users\\", "")
+        os.chdir(path_to_bot)
+        os.chdir('..')
+        path_to_folder = os.getcwd()
+        base_fw = bot_win.get_edit_lines_info()[0]
+        create = Create_Folder()
+        create.move_firmware_foundation(pc_name, base_fw, firmware)
+        create.create_custfw_folder(pc_name)
+        create.create_bin_folder(pc_name)
+        copy_files = Copy_Files()
+        worker_03 = WorkerThread_03()
+        worker_03.copy_bins(pc_name, path_to_bot)
+        worker_04 = WorkerThread_04()
+        worker_04.copy_bins(pc_name, path_to_bot)
+        create.zip_folder(pc_name)
+        copy_files.copy_bot_files(pc_name, path_to_bot, firmware)
+        copy_files.copy_XML(pc_name, path_to_folder)
+        name_del = RenameDelete()
+        create.delete_folder(pc_name)
+        name_del.rename(firmware, pc_name)
+        get_vcs_and_fw = WorkerThread_03()
+        get_vcs_and_fw.get_vcs_fw(pc_name)
+        flashver = get_vcs_and_fw.get_vcs_fw(pc_name)[1]
+        vcsid = get_vcs_and_fw.get_vcs_fw(pc_name)[0]
+        excel = Excel()
+        excel.open_excel(pc_name, flashver, vcsid, firmware)
+        create.move_custfw(pc_name, firmware)
+        self.delete_custfw(pc_name)
+        self.good_bye(pc_name, firmware)
+
     def make_custfw_prod(self):
         from create_folder import Create_Folder
         from rename_delete import RenameDelete
         from excel import Excel
-        from bot_window_prod import Ui_OtherWindow
+        from calx2_bot_eng import Ui_OtherWindow
 
         bot_win = Ui_OtherWindow()
         bot_win.make_logs()
@@ -201,4 +248,96 @@ class WorkerThread_02(QThread):
                 os.chdir(og_directory)
                 self.update_progress.emit(10)
 
+class WorkerThread_03(QThread):
+    update_progress = pyqtSignal(int)
 
+    def copy_bins(self, pc_name, path_to_bot):
+        import shutil
+        import names
+        from names import calx2_bin_files_01
+        import os.path
+        from os import path
+        parent_dir = fr'C:\Users\{pc_name}\Desktop' + 'CUSTFW' + 'SkuConfig'
+        for name in names.calx2_bin_files_01:
+            pathway_to_firmware = f'{path_to_bot}'
+            og_directory = os.getcwd()
+            os.chdir(pathway_to_firmware)
+            if path.exists(name):
+                original = f'{path_to_bot}' + f'\\{name}'
+                target = fr'C:\Users\{pc_name}\Desktop\CUSTFW\SkuConfig\{name}'
+                shutil.copyfile(original, target)
+                print(f'{name} has been transferred to {parent_dir}\n')
+                f = open(r"C:\Users\Public\log.txt", "a+")
+                f.write(f'{name} has been transferred to {parent_dir}\n')
+                f.close()
+                self.update_progress.emit(10)
+            else:
+                print('FAILED TO TRANSFER')
+                f = open(r"C:\Users\Public\log.txt", "a+")
+                f.write(f'{name} has been failed to transfer\n')
+                f.close()
+                os.chdir(og_directory)
+                self.update_progress.emit(10)
+
+    def get_vcs_fw(self, pc_name):
+        """Pulls vcs id and firmware from CFG.bot"""
+        vcsid_fw = []
+        lookup = 'FlashVer: '
+        lookup2 = 'VcsId: '
+        with open(fr'C:\Users\{pc_name}\Desktop\CUSTFW\CFG.bot', encoding='latin1') as myFile:
+            for num, line in enumerate(myFile, 1):
+                if lookup in line.strip('\\n'):
+                    vcsid_fw.append(line[-9:])
+                    vcsid_fw_stripped = [x.replace('\n', '') for x in vcsid_fw]
+                    self.update_progress.emit(10)
+                if lookup2 in line.strip('\\n'):
+                    vcsid_fw.append(line[-11:])
+                    self.update_progress.emit(10)
+            return vcsid_fw_stripped
+
+    def get_vcs_fw_prod(self, pc_name, firmware):
+        """Pulls vcs id and firmware from CFG.bot"""
+        vcsid_fw = []
+        lookup = 'FlashVer: '
+        lookup2 = 'VcsId: '
+        with open(fr'C:\Users\{pc_name}\Desktop\fw-{firmware}\CUSTFW\CFG.bot', encoding='latin1') as myFile:
+            for num, line in enumerate(myFile, 1):
+                if lookup in line.strip('\\n'):
+                    vcsid_fw.append(line[-9:])
+                    vcsid_fw_stripped = [x.replace('\n', '') for x in vcsid_fw]
+                    self.update_progress.emit(10)
+                if lookup2 in line.strip('\\n'):
+                    vcsid_fw.append(line[-11:])
+                    self.update_progress.emit(10)
+            return vcsid_fw_stripped
+
+class WorkerThread_04(QThread):
+    """Takes bin files from BOT file, and pastes it into firmware desktop folder"""
+    update_progress = pyqtSignal(int)
+    def copy_bins(self, pc_name, path_to_bot):
+        import shutil
+        import names
+        from names import calx2_bin_files_02
+        import os.path
+        from os import path
+        parent_dir = fr'C:\Users\{pc_name}\Desktop' + 'CUSTFW' + 'SkuConfig'
+        for name in names.calx2_bin_files_02:
+            pathway_to_firmware = f'{path_to_bot}'
+            og_directory = os.getcwd()
+            os.chdir(pathway_to_firmware)
+            if path.exists(name):
+                original = f'{path_to_bot}' + f'\\{name}'
+                target = fr'C:\Users\{pc_name}\Desktop\CUSTFW\SkuConfig\{name}'
+                shutil.copyfile(original, target)
+                print(f'{name} has been transferred to {parent_dir}\n')
+                f = open(r"C:\Users\Public\log.txt", "a+")
+                f.write(f'{name} has been transferred to {parent_dir}\n')
+                f.close()
+                self.update_progress.emit(10)
+            else:
+                print('FAILED TO TRANSFER')
+                f = open(r"C:\Users\Public\log.txt", "a+")
+                f.write(f'{name} has been failed to transfer\n')
+                f.close()
+                os.chdir(og_directory)
+                self.update_progress.emit(10)
