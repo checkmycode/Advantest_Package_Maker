@@ -1,7 +1,5 @@
-import os
 import shutil
 import names
-from names import BIN_FILES
 
 class Copy_Files:
 

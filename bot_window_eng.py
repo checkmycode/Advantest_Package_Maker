@@ -1,7 +1,13 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import *
+import sys, time
+
 information = {'ptb': ''}
 
-class Ui_OtherWindow(object):
+class Ui_OtherWindow(QDialog):
+    def __init__(self):
+        super().__init__()
+
     def setupUi(self, Form):
         Form.setObjectName("Form")
         Form.resize(421, 91)
@@ -86,9 +92,19 @@ class Ui_OtherWindow(object):
 
 
     def click_ok(self):
-        from make_custfw import MakeCustfw
+        from make_custfw import MakeCustfw, WorkerThread
         custfw = MakeCustfw()
         custfw.make_custfw()
+        self.worker = WorkerThread()
+        self.worker.start()
+        self.worker.finished.connect(self.evt_worker_finished)
+        self.worker.update_progress.connect(self.evt_update_progress)
+
+    def evt_worker_finished(self):
+        QMessageBox.information(self, "Done!", "Worker thread complete!")
+
+    def evt_update_progress(self, val):
+        self.prg.setValue(val)
 
     def click_cancel(self):
         sys.exit()

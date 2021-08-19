@@ -6,6 +6,7 @@ home_list = [
     "Atlas_Production_Lenovo", "Atlas_Production_Microsoft",
 ]
 
+
 class HomeWindow(object):
     def __init__(self):
         super().__init__()
