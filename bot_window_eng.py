@@ -1,6 +1,5 @@
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import *
-import sys, time
 
 information = {'ptb': ''}
 
@@ -90,13 +89,23 @@ class Ui_OtherWindow(QDialog):
                     info_stripped = [x.replace('\n', '') for x in info]
             return info_stripped
 
+    def open_progress_bar(self):
+        from progress_bar import ProgressBar
+        self.window = QtWidgets.QWidget()
+        self.ui = ProgressBar()
+        self.ui.initUI()
+        self.window.show()
+        MainWindow.hide()
 
     def click_ok(self):
-        from make_custfw import MakeCustfw, WorkerThread
+        from make_custfw import MakeCustfw, WorkerThread, WorkerThread_02
         custfw = MakeCustfw()
         custfw.make_custfw()
         self.worker = WorkerThread()
         self.worker.start()
+        self.worker_02 = WorkerThread_02()
+        self.worker_02.start()
+        self.open_progress_bar()
         self.worker.finished.connect(self.evt_worker_finished)
         self.worker.update_progress.connect(self.evt_update_progress)
 

@@ -104,10 +104,10 @@ class Create_Folder:
         import shutil
 
         # path
-        path = fr'C:\Users\{pc_name}\Desktop\base_fw\{base_fw}'
+        path = fr'\\10.195.35.226\shared\mark.cuasay\base_fw\{base_fw}'
 
         # Source path
-        src = fr'C:\Users\{pc_name}\Desktop\base_fw\{base_fw}'
+        src = fr'\\10.195.35.226\shared\mark.cuasay\base_fw\{base_fw}'
 
         # Destination path
         dest = fr'C:\Users\{pc_name}\Desktop\fw-{firmware}'

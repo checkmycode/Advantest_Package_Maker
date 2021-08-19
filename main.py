@@ -19,6 +19,7 @@ class HomeWindow(object):
         self.window.show()
         MainWindow.hide()
 
+
     def open_production_window(self):
         from bot_window_prod import Ui_OtherWindow
         self.bot_window = QtWidgets.QMainWindow()
