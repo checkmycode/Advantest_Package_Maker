@@ -33,10 +33,16 @@ class Ui_OtherWindow(QDialog):
         self.ok_button = QtWidgets.QPushButton(Form)
         self.ok_button.setGeometry(QtCore.QRect(240, 60, 81, 23))
         self.ok_button.setObjectName("ok_button")
+        self.ok_button.setDefault(True)
         self.ok_button.clicked.connect(self.click_ok)
+
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
+
+    def keyPressEvent(self, event):
+        if event.key() == QtCore.Qt.Key_Return:
+            self.click_ok()
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate

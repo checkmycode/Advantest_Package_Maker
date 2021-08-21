@@ -34,6 +34,7 @@ class Ui_OtherWindow(QDialog):
         self.ok_button.setGeometry(QtCore.QRect(240, 60, 81, 23))
         self.ok_button.setObjectName("ok_button")
         self.ok_button.clicked.connect(self.click_ok)
+        self.ok_button.setAutoDefault(True)
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)

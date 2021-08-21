@@ -3,7 +3,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 home_list = [
     "Atlas_Engineering_GOEM_Retail", "Atlas_Engineering_HP", "Atlas_Engineering_Dell", "Atlas_Engineering_Lenovo",
     "Atlas_Engineering_Microsoft", "Atlas_Production_GOEM", "Atlas_Production_HP", "Atlas_Production_Dell",
-    "Atlas_Production_Lenovo", "Atlas_Production_Microsoft", "CalypsoX2_Engineering_GOEM",
+    "Atlas_Production_Lenovo", "Atlas_Production_Microsoft", "CalypsoX2_Engineering_GOEM", 'CalypsoX2_Engineering_XBOX',
 ]
 
 
@@ -162,6 +162,14 @@ class HomeWindow(object):
             f = open(r"C:\Users\Public\log.txt", "a+")
             f.write(f"Base_fw: {home_list[10]}\n")
             f.close()
+        elif item.text() == "CalypsoX2_Engineering_XBOX":
+            self.open_calx2_eng()
+            f = open(r"C:\Users\Public\log.txt", "a+")
+            f.write(f"Base_fw: {home_list[11]}\n")
+            f.close()
+            global xbox
+            xbox = 11
+
         else:
             print('Please restart the program.')
 

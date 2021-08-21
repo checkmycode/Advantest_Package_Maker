@@ -98,16 +98,12 @@ class Create_Folder:
 
     def move_firmware_foundation(self, pc_name, base_fw, firmware):
         # importing os module
-        import os
-
-        # importing shutil module
         import shutil
-
         # path
-        path = fr'\\10.195.35.226\shared\mark.cuasay\base_fw\{base_fw}'
+        path = fr'C:\Users\7329711\Desktop\base_fw\{base_fw}'
 
         # Source path
-        src = fr'\\10.195.35.226\shared\mark.cuasay\base_fw\{base_fw}'
+        src = path
 
         # Destination path
         dest = fr'C:\Users\{pc_name}\Desktop\fw-{firmware}'

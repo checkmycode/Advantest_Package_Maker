@@ -54,13 +54,12 @@ class MakeCustfw(QDialog):
         self.delete_custfw(pc_name)
         self.good_bye(pc_name, firmware)
 
-
     def make_custfw_calx2_eng(self):
         from copy_files import Copy_Files
         from create_folder import Create_Folder
         from rename_delete import RenameDelete
         from excel import Excel
-        from bot_window_eng import Ui_OtherWindow
+        from calx2_bot_eng import Ui_OtherWindow
 
         bot_win = Ui_OtherWindow()
         bot_win.make_logs()
@@ -94,7 +93,7 @@ class MakeCustfw(QDialog):
         flashver = get_vcs_and_fw.get_vcs_fw(pc_name)[1]
         vcsid = get_vcs_and_fw.get_vcs_fw(pc_name)[0]
         excel = Excel()
-        excel.open_excel(pc_name, flashver, vcsid, firmware)
+        excel.open_excel_calx2(pc_name, flashver, vcsid, firmware)
         create.move_custfw(pc_name, firmware)
         self.delete_custfw(pc_name)
         self.good_bye(pc_name, firmware)
@@ -221,6 +220,7 @@ class WorkerThread(QThread):
 class WorkerThread_02(QThread):
     """Takes bin files from BOT file, and pastes it into firmware desktop folder"""
     update_progress = pyqtSignal(int)
+
     def copy_bins(self, pc_name, path_to_bot):
         import shutil
         import names
@@ -248,16 +248,16 @@ class WorkerThread_02(QThread):
                 os.chdir(og_directory)
                 self.update_progress.emit(10)
 
+
 class WorkerThread_03(QThread):
     update_progress = pyqtSignal(int)
 
     def copy_bins(self, pc_name, path_to_bot):
         import shutil
         import names
-        from names import calx2_bin_files_01
         import os.path
         from os import path
-        parent_dir = fr'C:\Users\{pc_name}\Desktop' + 'CUSTFW' + 'SkuConfig'
+        parent_dir = fr'C:\Users\{pc_name}\Desktop' + '\CUSTFW' + '\SkuConfig'
         for name in names.calx2_bin_files_01:
             pathway_to_firmware = f'{path_to_bot}'
             og_directory = os.getcwd()
@@ -311,16 +311,17 @@ class WorkerThread_03(QThread):
                     self.update_progress.emit(10)
             return vcsid_fw_stripped
 
+
 class WorkerThread_04(QThread):
     """Takes bin files from BOT file, and pastes it into firmware desktop folder"""
     update_progress = pyqtSignal(int)
+
     def copy_bins(self, pc_name, path_to_bot):
         import shutil
         import names
-        from names import calx2_bin_files_02
         import os.path
         from os import path
-        parent_dir = fr'C:\Users\{pc_name}\Desktop' + 'CUSTFW' + 'SkuConfig'
+        parent_dir = fr'C:\Users\{pc_name}\Desktop' + '\CUSTFW' + '\SkuConfig'
         for name in names.calx2_bin_files_02:
             pathway_to_firmware = f'{path_to_bot}'
             og_directory = os.getcwd()
