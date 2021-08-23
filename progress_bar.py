@@ -5,7 +5,6 @@ from PyQt5.QtCore import *
 import sys
 import time
 
-
 class ProgressBar(QWidget):
 
     def __init__(self):
@@ -20,23 +19,37 @@ class ProgressBar(QWidget):
         self.pbar = QProgressBar(self)
 
         # setting its geometry
-        self.pbar.setGeometry(30, 40, 200, 25)
+        self.pbar.setGeometry(35, 30, 250, 25)
 
         # setting window geometry
-        self.setGeometry(300, 300, 280, 170)
+        self.setGeometry(150, 150, 280, 85)
 
         # setting window action
         self.setWindowTitle("Progress makes Perfect")
+
+        # creating push button
+        self.btn = QPushButton('Start', self)
+
+        # changing its position
+        self.btn.move(40, 80)
+
+        # adding action to push button
+        self.btn.clicked.connect(self.doAction)
 
         # showing all the widgets
         self.show()
 
     # when button is pressed this method is being called
-    def doAction(self):
-        # setting for loop to set value of progress bar
-        for i in range(101):
-            # slowing down the loop
-            time.sleep(0.05)
+    def doAction(self, i):
+        self.pbar.setValue(i+10)
 
-            # setting value to progress bar
-            self.pbar.setValue(i)
+
+if __name__ == '__main__':
+    # create pyqt5 app
+    App = QApplication(sys.argv)
+
+    # create the instance of our Window
+    window = ProgressBar()
+
+    # start the app
+    sys.exit(App.exec())
