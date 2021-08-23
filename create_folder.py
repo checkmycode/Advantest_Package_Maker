@@ -57,7 +57,7 @@ class Create_Folder:
         parent_dir = fr'C:\Users\{pc_name}\Desktop' + '\CUSTFW'
         original_working_directory = os.getcwd()
         os.chdir(parent_dir)
-        print('Zipping SkuConfig')
+        print('Zipping SkuConfig\n')
 
         if path.exists('SkuConfig'):
             shutil.make_archive(
@@ -95,6 +95,10 @@ class Create_Folder:
         target = fr'C:\Users\{pc_name}\Desktop\fw-{firmware}'
 
         shutil.move(original, target)
+        print(fr'custfw has been transferred to {target}')
+        f = open(r"C:\Users\Public\log.txt", "a+")
+        f.write(fr'custfw has been transferred to {target}' + "\n")
+        f.close()
 
     def move_firmware_foundation(self, pc_name, base_fw, firmware):
         # importing os module

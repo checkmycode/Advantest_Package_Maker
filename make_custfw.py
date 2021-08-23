@@ -93,7 +93,7 @@ class MakeCustfw(QDialog):
         flashver = get_vcs_and_fw.get_vcs_fw(pc_name)[1]
         vcsid = get_vcs_and_fw.get_vcs_fw(pc_name)[0]
         excel = Excel()
-        excel.open_excel_calx2(pc_name, flashver, vcsid, firmware)
+        excel.open_excel(pc_name, flashver, vcsid, firmware)
         create.move_custfw(pc_name, firmware)
         self.delete_custfw(pc_name)
         self.good_bye(pc_name, firmware)
@@ -126,7 +126,7 @@ class MakeCustfw(QDialog):
         flashver = get_vcs_and_fw.get_vcs_fw_prod(pc_name, firmware)[1]
         vcsid = get_vcs_and_fw.get_vcs_fw_prod(pc_name, firmware)[0]
         excel = Excel()
-        excel.open_excel_prod(pc_name, flashver, vcsid, firmware)
+        excel.open_excel(pc_name, flashver, vcsid, firmware)
         self.good_bye_prod(pc_name, firmware)
 
     def delete_custfw(self, pc_name):
