@@ -12,10 +12,10 @@ class MakeCustfw(QDialog):
 
     def make_custfw(self):
         from copy_files import Copy_Files
-        from create_folder import Create_Folder
+        from createfolder import CreateFolder
         from rename_delete import RenameDelete
         from excel import Excel
-        from calx2_bot_eng import Ui_OtherWindow
+        from bot_window_eng import Ui_OtherWindow
 
         bot_win = Ui_OtherWindow()
         bot_win.make_logs()
@@ -29,7 +29,7 @@ class MakeCustfw(QDialog):
         os.chdir('..')
         path_to_folder = os.getcwd()
         base_fw = bot_win.get_edit_lines_info()[0]
-        create = Create_Folder()
+        create = CreateFolder()
         create.move_firmware_foundation(pc_name, base_fw, firmware)
         create.create_custfw_folder(pc_name)
         create.create_bin_folder(pc_name)
@@ -56,7 +56,7 @@ class MakeCustfw(QDialog):
 
     def make_custfw_calx2_eng(self):
         from copy_files import Copy_Files
-        from create_folder import Create_Folder
+        from createfolder import CreateFolder
         from rename_delete import RenameDelete
         from excel import Excel
         from calx2_bot_eng import Ui_OtherWindow
@@ -73,7 +73,7 @@ class MakeCustfw(QDialog):
         os.chdir('..')
         path_to_folder = os.getcwd()
         base_fw = bot_win.get_edit_lines_info()[0]
-        create = Create_Folder()
+        create = CreateFolder()
         create.move_firmware_foundation(pc_name, base_fw, firmware)
         create.create_custfw_folder(pc_name)
         create.create_bin_folder(pc_name)
@@ -99,10 +99,10 @@ class MakeCustfw(QDialog):
         self.good_bye(pc_name, firmware)
 
     def make_custfw_prod(self):
-        from create_folder import Create_Folder
+        from createfolder import CreateFolder
         from rename_delete import RenameDelete
         from excel import Excel
-        from calx2_bot_eng import Ui_OtherWindow
+        from bot_window_prod import Ui_OtherWindow
 
         bot_win = Ui_OtherWindow()
         bot_win.make_logs()
@@ -115,7 +115,7 @@ class MakeCustfw(QDialog):
         os.chdir(path_to_bot)
         os.chdir('..')
         base_fw = bot_win.get_edit_lines_info()[0]
-        create = Create_Folder()
+        create = CreateFolder()
         create.move_firmware_foundation(pc_name, base_fw, firmware)
         create.move_cust_fw_production(pc_name, path_to_bot, firmware)
         rename = RenameDelete()

@@ -42,7 +42,8 @@ class Ui_OtherWindow(QDialog):
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", r"Must use \\usg-og-fpgcss01.wdc.com)"))
-        self.label.setText(_translate("Form", r"<html><head/><body><p><span style=\" font-size:10pt;\">PATHWAY TO BOT FOLDER </span></p></body></html>"))
+        self.label.setText(_translate("Form",
+                                      r"<html><head/><body><p><span style=\" font-size:10pt;\">PATHWAY TO BOT FOLDER </span></p></body></html>"))
         self.browse_push_button.setText(_translate("Form", "Browse"))
         self.cancel_button.setText(_translate("Form", "Cancel"))
         self.ok_button.setText(_translate("Form", "OK"))

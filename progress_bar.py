@@ -40,9 +40,13 @@ class ProgressBar(QWidget):
         self.show()
 
     # when button is pressed this method is being called
-    def doAction(self, i):
-        self.pbar.setValue(i+10)
-
+    def doAction(self):
+        stop = 0
+        while stop != 1:
+            if stop == 0:
+                self.pbar.setValue(100)
+            if self.pbar.setValue == 100:
+                stop = 1
 
 if __name__ == '__main__':
     # create pyqt5 app

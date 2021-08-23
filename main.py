@@ -19,7 +19,6 @@ class HomeWindow(object):
         self.window.show()
         MainWindow.hide()
 
-
     def open_production_window(self):
         from bot_window_prod import Ui_OtherWindow
         self.bot_window = QtWidgets.QMainWindow()
@@ -103,7 +102,7 @@ class HomeWindow(object):
 
     def clicked(self):
         item = self.home_listbox.currentItem()
-        if item == None:
+        if item is None:
             print('Select an item from the list')
         elif item.text() == "Atlas_Engineering_GOEM_Retail":
             self.open_bot_window()
