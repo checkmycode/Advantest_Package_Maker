@@ -7,9 +7,12 @@ class RenameDelete:
         import names
         import os
         rename_CFG = f'CFG_{firmware}.bot'
-        print(f'Renaming {rename_CFG} to CFG.bot')
+        print(f'Renaming {rename_CFG} to CFG.bot\n')
         os.rename(fr'C:\Users\{pc_name}\Desktop\CUSTFW\{rename_CFG}',
                   fr'C:\Users\{pc_name}\Desktop\CUSTFW\CFG.bot')
+        f = open(r"C:\Users\Public\log.txt", "a+")
+        f.write(f'Renaming {rename_CFG} to CFG.bot\n')
+        f.close()
 
     def del_dictionary(self, pc_name, firmware):
         import os.path
@@ -17,8 +20,17 @@ class RenameDelete:
         os.chdir(dir)
         if os.path.isfile('SetDictionary.dco'):
             os.remove('SetDictionary.dco')
+            print("Deleting SetDictionary.dco\n")
+            f = open(r"C:\Users\Public\log.txt", "a+")
+            f.write("Deleting SetDictionary.dco\n")
+            f.close()
+
         if os.path.isfile('FwtDictionary.fdo'):
             os.remove('FwtDictionary.fdo')
+            print("Deleting FwtDictionary.fdo")
+            f = open(r"C:\Users\Public\log.txt", "a+")
+            f.write("Deleting FwtDictionary.fdo\n")
+            f.close()
 
     def rename_production(self, firmware, pc_name):
         import os
@@ -48,3 +60,7 @@ class RenameDelete:
             if os.path.isfile(name):
                 new_name = name.replace(f'_{firmware}', '')
                 os.rename(name, new_name)
+                print(fr"Renaming {name} to {new_name}")
+                f = open(r"C:\Users\Public\log.txt", "a+")
+                f.write(fr"Renaming {name} to {new_name}")
+                f.close()

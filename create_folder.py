@@ -21,6 +21,9 @@ class Create_Folder:
         # Create the directory
         os.mkdir(path)
         print("Directory '% s' created" % directory)
+        f = open(r"C:\Users\Public\log.txt", "a+")
+        f.write("Directory '% s' created\n" % directory)
+        f.close()
 
     def create_custfw_folder(self, PC_NAME):
         """Creates CUSTFW folder"""
@@ -36,6 +39,9 @@ class Create_Folder:
         # Create the directory
         os.mkdir(path)
         print("Directory '% s' created" % directory)
+        f = open(r"C:\Users\Public\log.txt", "a+")
+        f.write("Directory '% s' created\n" % directory)
+        f.close()
 
     def create_bin_folder(self,PC_NAME):
         '''Creates SkuConfig folder for bin files'''
@@ -51,6 +57,10 @@ class Create_Folder:
         # Create the directory
         os.mkdir(path)
         print("Directory '% s' created" % directory)
+        f = open(r"C:\Users\Public\log.txt", "a+")
+        f.write("Directory '% s' created\n" % directory)
+        f.close()
+
 
     def zip_folder(self, pc_name):
         '''Zips SkuConfig'''
@@ -58,6 +68,7 @@ class Create_Folder:
         original_working_directory = os.getcwd()
         os.chdir(parent_dir)
         print('Zipping SkuConfig\n')
+
 
         if path.exists('SkuConfig'):
             shutil.make_archive(
@@ -70,7 +81,10 @@ class Create_Folder:
         '''Deletes unzipped SkuConfig'''
         parent_dir = fr'C:\Users\{pc_name}\Desktop' + '\CUSTFW' + '\SkuConfig'
         shutil.rmtree(parent_dir)
-        print('Deleting SkuConfig')
+        print('Deleting SkuConfig\n')
+        f = open(r"C:\Users\Public\log.txt", "a+")
+        f.write('Deleting SkuConfig' + "\n")
+        f.close()
 
     def move_attributes(self, pc_name, base_fw):
         import os.path
@@ -113,6 +127,11 @@ class Create_Folder:
         dest = fr'C:\Users\{pc_name}\Desktop\fw-{firmware}'
 
         shutil.copytree(src, dest)
+        print(f"Moving firmware foundation to {dest}\n")
+        f = open(r"C:\Users\Public\log.txt", "a+")
+        f.write(fr'Moving firmware foundation to  {dest}' + "\n")
+        f.close()
+
 
     def move_cust_fw_production(self, pc_name, pathway_to_bot, firmware):
         # importing os module
@@ -128,6 +147,9 @@ class Create_Folder:
         dest = fr'C:\Users\{pc_name}\Desktop\fw-{firmware}\CUSTFW'
 
         shutil.copytree(src, dest)
-
+        print(f"Moving custfw (production) to {dest}\n")
+        f = open(r"C:\Users\Public\log.txt", "a+")
+        f.write(f"Moving custfw (production) to {dest}\n")
+        f.close()
 
 
