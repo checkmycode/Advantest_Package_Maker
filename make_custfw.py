@@ -15,7 +15,7 @@ class MakeCustfw(QDialog):
         from create_folder import Create_Folder
         from rename_delete import RenameDelete
         from excel import Excel
-        from bot_window_eng import Ui_OtherWindow
+        from calx2_bot_eng import Ui_OtherWindow
 
         bot_win = Ui_OtherWindow()
         bot_win.make_logs()
@@ -93,7 +93,7 @@ class MakeCustfw(QDialog):
         flashver = get_vcs_and_fw.get_vcs_fw(pc_name)[1]
         vcsid = get_vcs_and_fw.get_vcs_fw(pc_name)[0]
         excel = Excel()
-        excel.open_excel(pc_name, flashver, vcsid, firmware)
+        excel.open_excel_calx2(pc_name, flashver, vcsid, firmware)
         create.move_custfw(pc_name, firmware)
         self.delete_custfw(pc_name)
         self.good_bye(pc_name, firmware)

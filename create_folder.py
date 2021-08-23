@@ -118,7 +118,7 @@ class Create_Folder:
         # importing os module
         import shutil
         # path
-        path = fr'C:\Users\7329711\Desktop\base_fw\{base_fw}'
+        path = fr'\\10.195.35.226\shared\mark.cuasay\base_fw\{base_fw}'
 
         # Source path
         src = path
