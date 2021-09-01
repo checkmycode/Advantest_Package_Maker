@@ -5,71 +5,42 @@ import shutil
 
 class CreateFolder:
 
-    def __init__(self):
-        pass
-
-
     def create_firmware_folder(self, pc_name, firmware):
         """Creates firmware folder"""
-        # Directory
         directory = f'fw-{firmware}'
-
-        # Parent Directory path
         parent_dir = fr'C:\Users\{pc_name}\Desktop'
-
-        # Path
-        path = os.path.join(parent_dir, directory)
-
-        # Create the directory
-        os.mkdir(path)
+        pathway = os.path.join(parent_dir, directory)
+        os.mkdir(pathway)
         print("Directory '% s' created" % directory)
-        f = open(r"C:\Users\Public\log.txt", "a+")
-        f.write("Directory '% s' created\n" % directory)
-        f.close()
+        with open(r"C:\Users\Public\log.txt", "a+") as f:
+            f.write("Directory '% s' created\n" % directory)
 
     def create_custfw_folder(self, pc_name):
         """Creates CUSTFW folder"""
-        # Directory
         directory = "CUSTFW"
-
-        # Parent Directory path
         parent_dir = fr'C:\Users\{pc_name}\Desktop'
-
-        # Path
-        path = os.path.join(parent_dir, directory)
-
-        # Create the directory
-        os.mkdir(path)
+        pathway = os.path.join(parent_dir, directory)
+        os.mkdir(pathway)
         print("Directory '% s' created" % directory)
-        f = open(r"C:\Users\Public\log.txt", "a+")
-        f.write("Directory '% s' created\n" % directory)
-        f.close()
+        with open(r"C:\Users\Public\log.txt", "a+") as f:
+            f.write("Directory '% s' created\n" % directory)
 
     def create_bin_folder(self, pc_name):
         """Creates SkuConfig folder for bin files"""
-        # Directory
         directory = "SkuConfig"
-
-        # Parent Directory path
         parent_dir = fr'C:\Users\{pc_name}\Desktop' + r'\CUSTFW'
-
-        # Path
-        path = os.path.join(parent_dir, directory)
-
-        # Create the directory
-        os.mkdir(path)
+        pathway = os.path.join(parent_dir, directory)
+        os.mkdir(pathway)
         print("Directory '% s' created" % directory)
-        f = open(r"C:\Users\Public\log.txt", "a+")
-        f.write("Directory '% s' created\n" % directory)
-        f.close()
+        with open(r"C:\Users\Public\log.txt", "a+") as f:
+            f.write("Directory '% s' created\n" % directory)
 
     def zip_folder(self, pc_name):
         """Zips SkuConfig"""
-        parent_dir = fr'C:\Users\{pc_name}\Desktop' + '\CUSTFW'
+        parent_dir = fr'C:\Users\{pc_name}\Desktop' + r'\CUSTFW'
         original_working_directory = os.getcwd()
         os.chdir(parent_dir)
         print('Zipping SkuConfig\n')
-
 
         if path.exists('SkuConfig'):
             shutil.make_archive(
@@ -80,12 +51,11 @@ class CreateFolder:
 
     def delete_folder(self, pc_name):
         """Deletes unzipped SkuConfig"""
-        parent_dir = fr'C:\Users\{pc_name}\Desktop' + '\CUSTFW' + '\SkuConfig'
+        parent_dir = fr'C:\Users\{pc_name}\Desktop' + r'\CUSTFW' + r'\SkuConfig'
         shutil.rmtree(parent_dir)
         print('Deleting SkuConfig\n')
-        f = open(r"C:\Users\Public\log.txt", "a+")
-        f.write('Deleting SkuConfig' + "\n")
-        f.close()
+        with open(r"C:\Users\Public\log.txt", "a+") as f:
+            f.write('Deleting SkuConfig' + "\n")
 
     def move_attributes(self, pc_name, base_fw):
         import os.path
@@ -98,9 +68,8 @@ class CreateFolder:
             target = fr'C:\Users\{pc_name}\Desktop\CUSTFW\{name}'
             shutil.copyfile(original, target)
             print(fr'{name} has been transferred to {parent_dir}' + r'\CUSTFW')
-            f = open(r"C:\Users\Public\log.txt", "a+")
-            f.write(fr'{name} has been transferred to {parent_dir}' + r'\CUSTFW' + "\n")
-            f.close()
+            with open(r"C:\Users\Public\log.txt", "a+") as f:
+                f.write(fr'{name} has been transferred to {parent_dir}' + r'\CUSTFW' + "\n")
         else:
             print('attributes don\'t exist? fix this')
 
@@ -116,35 +85,20 @@ class CreateFolder:
         f.close()
 
     def move_firmware_foundation(self, pc_name, base_fw, firmware):
-        # importing os module
         import shutil
-        # path
-        path = fr'\\10.195.35.226\shared\mark.cuasay\base_fw\{base_fw}'
-
-        # Source path
-        src = path
-
-        # Destination path
+        src = fr'\\10.195.35.226\shared\mark.cuasay\base_fw\{base_fw}'
         dest = fr'C:\Users\{pc_name}\Desktop\fw-{firmware}'
 
         shutil.copytree(src, dest)
         print(f"Moving firmware foundation to {dest}\n")
-        f = open(r"C:\Users\Public\log.txt", "a+")
-        f.write(fr'Moving firmware foundation to  {dest}' + "\n")
-        f.close()
+        with open(r"C:\Users\Public\log.txt", "a+") as f:
+            f.write(fr'Moving firmware foundation to  {dest}' + "\n")
 
     def move_cust_fw_production(self, pc_name, pathway_to_bot, firmware):
-        # importing shutil module
         import shutil
-
-        # Source path
         src = fr'{pathway_to_bot}'
-
-        # Destination path
         dest = fr'C:\Users\{pc_name}\Desktop\fw-{firmware}\CUSTFW'
-
         shutil.copytree(src, dest)
         print(f"Moving custfw (production) to {dest}\n")
-        f = open(r"C:\Users\Public\log.txt", "a+")
-        f.write(f"Moving custfw (production) to {dest}\n")
-        f.close()
+        with open(r"C:\Users\Public\log.txt", "a+") as f:
+            f.write(f"Moving custfw (production) to {dest}\n")

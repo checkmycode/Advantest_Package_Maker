@@ -1,5 +1,6 @@
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import *
+from make_custfw import MakeCustfw, WorkerThread03, WorkerThread04
 
 information = {'ptb': ''}
 
@@ -7,6 +8,8 @@ information = {'ptb': ''}
 class Ui_OtherWindow(QDialog):
     def __init__(self):
         super().__init__()
+        self.worker_04 = WorkerThread04()
+        self.worker_03 = WorkerThread03()
 
     def setupUi(self, Form):
         Form.setObjectName("Form")
@@ -43,7 +46,8 @@ class Ui_OtherWindow(QDialog):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", r"Must use \\usg-og-fpgcss01.wdc.com)"))
         self.label.setText(_translate("Form",
-                                      r"<html><head/><body><p><span style=\" font-size:10pt;\">PATHWAY TO BOT FOLDER </span></p></body></html>"))
+                                      r"<html><head/><body><p><span style=\" font-size:10pt;\">"
+                                      r"PATHWAY TO BOT FOLDER </span></p></body></html>"))
         self.browse_push_button.setText(_translate("Form", "Browse"))
         self.cancel_button.setText(_translate("Form", "Cancel"))
         self.ok_button.setText(_translate("Form", "OK"))
@@ -51,30 +55,19 @@ class Ui_OtherWindow(QDialog):
     def ptb_browse_button(self):
         from PyQt5.QtWidgets import QFileDialog
         file = str(QFileDialog.getExistingDirectory(None, 'Select Folder'))
-        ptb = self.browse_line_edit.setText(file)
+        # ptb = self.browse_line_edit.setText(file)
         information['ptb'] = self.browse_line_edit.text()
 
     def make_logs(self):
-        # import random
-        # id = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
-        # identifier = ""
-        # for num in id:
-        #     x = str(random.randint(1, 9))
-        #     identifier += x
-
-        f = open(r"C:\Users\Public\log.txt", "a+")
-        f.write(f"Pathway to BOT: {information['ptb']}\n")
-        f.close()
+        with open(r"C:\Users\Public\log.txt", "a+") as f:
+            f.write(f"Pathway to BOT: {information['ptb']}\n")
 
         with open(r"C:\Users\Public\log.txt", 'r') as file:
             filedata = file.read()
-
-            # Replace the target string
             filedata = filedata.replace('/', '\\')
 
-            # Write the file out again
-            with open(r"C:\Users\Public\log.txt", 'w') as file:
-                file.write(filedata)
+        with open(r"C:\Users\Public\log.txt", 'w') as file:
+            file.write(filedata)
 
     def get_edit_lines_info(self):
         """Pulls info submitted from edit lines from log.bot"""
@@ -93,12 +86,9 @@ class Ui_OtherWindow(QDialog):
             return info_stripped
 
     def click_ok(self):
-        from make_custfw import MakeCustfw, WorkerThread_03, WorkerThread_04
         custfw = MakeCustfw()
         custfw.make_custfw_calx2_eng()
-        self.worker_03 = WorkerThread_03()
         self.worker.start()
-        self.worker_04 = WorkerThread_04()
         self.worker_04.start()
         self.worker.finished.connect(self.evt_worker_finished)
         self.worker.update_progress.connect(self.evt_update_progress)

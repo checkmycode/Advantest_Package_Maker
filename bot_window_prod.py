@@ -87,12 +87,12 @@ class Ui_OtherWindow(object):
 
 
     def click_ok(self):
-        from make_custfw import MakeCustfw, WorkerThread, WorkerThread_02
+        from make_custfw import MakeCustfw, WorkerThread, WorkerThread02
         custfw = MakeCustfw()
         custfw.make_custfw_prod()
         self.worker = WorkerThread()
         self.worker.start()
-        self.worker_02 = WorkerThread_02()
+        self.worker_02 = WorkerThread02()
         self.worker_02.start()
 
     def click_cancel(self):

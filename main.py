@@ -166,9 +166,6 @@ class HomeWindow(object):
             f = open(r"C:\Users\Public\log.txt", "a+")
             f.write(f"Base_fw: {home_list[11]}\n")
             f.close()
-            global xbox
-            xbox = 11
-
         else:
             print('Please restart the program.')
 

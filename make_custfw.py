@@ -36,7 +36,7 @@ class MakeCustfw(QDialog):
         copy_files = Copy_Files()
         worker = WorkerThread()
         worker.copy_bins(pc_name, path_to_bot)
-        worker_02 = WorkerThread_02()
+        worker_02 = WorkerThread02()
         worker_02.copy_bins(pc_name, path_to_bot)
         create.zip_folder(pc_name)
         copy_files.copy_bot_files(pc_name, path_to_bot, firmware)
@@ -78,9 +78,9 @@ class MakeCustfw(QDialog):
         create.create_custfw_folder(pc_name)
         create.create_bin_folder(pc_name)
         copy_files = Copy_Files()
-        worker_03 = WorkerThread_03()
+        worker_03 = WorkerThread03()
         worker_03.copy_bins(pc_name, path_to_bot)
-        worker_04 = WorkerThread_04()
+        worker_04 = WorkerThread04()
         worker_04.copy_bins(pc_name, path_to_bot)
         create.zip_folder(pc_name)
         copy_files.copy_bot_files(pc_name, path_to_bot, firmware)
@@ -88,7 +88,7 @@ class MakeCustfw(QDialog):
         name_del = RenameDelete()
         create.delete_folder(pc_name)
         name_del.rename(firmware, pc_name)
-        get_vcs_and_fw = WorkerThread_03()
+        get_vcs_and_fw = WorkerThread03()
         get_vcs_and_fw.get_vcs_fw(pc_name)
         flashver = get_vcs_and_fw.get_vcs_fw(pc_name)[1]
         vcsid = get_vcs_and_fw.get_vcs_fw(pc_name)[0]
@@ -127,7 +127,7 @@ class MakeCustfw(QDialog):
         vcsid = get_vcs_and_fw.get_vcs_fw_prod(pc_name, firmware)[0]
         excel = Excel()
         excel.open_excel(pc_name, flashver, vcsid, firmware)
-        self.good_bye_prod(pc_name, firmware)
+        self.good_bye(pc_name, firmware)
 
     def delete_custfw(self, pc_name):
         import os.path
@@ -142,15 +142,9 @@ class MakeCustfw(QDialog):
 
     def good_bye(self, pc_name, firmware):
         self.move_logs(pc_name, firmware)
-        QMessageBox.information(self, "Success!", f"Your package can now be found on your desktop named fw-{firmware}.")
-        sys.exit()
-
-    def msg_btn(self):
-        sys.exit()
-
-    def good_bye_prod(self, pc_name, firmware):
-        self.move_logs(pc_name, firmware)
-        QMessageBox.information(self, "Success!", f"Your package can now be found on your desktop named fw-{firmware}.")
+        QMessageBox.information(self, "Success!",
+                                f"Your package can now be found on your desktop named fw-{firmware}.",
+                                )
         sys.exit()
 
 
@@ -217,7 +211,7 @@ class WorkerThread(QThread):
             return vcsid_fw_stripped
 
 
-class WorkerThread_02(QThread):
+class WorkerThread02(QThread):
     """Takes bin files from BOT file, and pastes it into firmware desktop folder"""
     update_progress = pyqtSignal(int)
 
@@ -249,7 +243,7 @@ class WorkerThread_02(QThread):
                 self.update_progress.emit(10)
 
 
-class WorkerThread_03(QThread):
+class WorkerThread03(QThread):
     update_progress = pyqtSignal(int)
 
     def copy_bins(self, pc_name, path_to_bot):
@@ -257,7 +251,7 @@ class WorkerThread_03(QThread):
         import names
         import os.path
         from os import path
-        parent_dir = fr'C:\Users\{pc_name}\Desktop' + '\CUSTFW' + '\SkuConfig'
+        parent_dir = fr'C:\Users\{pc_name}\Desktop' + r'\CUSTFW' + r'\SkuConfig'
         for name in names.calx2_bin_files_01:
             pathway_to_firmware = f'{path_to_bot}'
             og_directory = os.getcwd()
@@ -312,7 +306,7 @@ class WorkerThread_03(QThread):
             return vcsid_fw_stripped
 
 
-class WorkerThread_04(QThread):
+class WorkerThread04(QThread):
     """Takes bin files from BOT file, and pastes it into firmware desktop folder"""
     update_progress = pyqtSignal(int)
 
@@ -321,7 +315,7 @@ class WorkerThread_04(QThread):
         import names
         import os.path
         from os import path
-        parent_dir = fr'C:\Users\{pc_name}\Desktop' + '\CUSTFW' + '\SkuConfig'
+        parent_dir = fr'C:\Users\{pc_name}\Desktop' + r'\CUSTFW' + r'\SkuConfig'
         for name in names.calx2_bin_files_02:
             pathway_to_firmware = f'{path_to_bot}'
             og_directory = os.getcwd()

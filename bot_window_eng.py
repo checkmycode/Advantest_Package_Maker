@@ -97,12 +97,12 @@ class Ui_OtherWindow(QDialog):
             return info_stripped
 
     def click_ok(self):
-        from make_custfw import MakeCustfw, WorkerThread, WorkerThread_02
+        from make_custfw import MakeCustfw, WorkerThread, WorkerThread02
         custfw = MakeCustfw()
         custfw.make_custfw()
         self.worker = WorkerThread()
         self.worker.start()
-        self.worker_02 = WorkerThread_02()
+        self.worker_02 = WorkerThread02()
         self.worker_02.start()
         self.open_progress_bar()
         self.worker.finished.connect(self.evt_worker_finished)
