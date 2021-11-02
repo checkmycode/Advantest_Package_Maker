@@ -4,6 +4,7 @@ home_list = [
     "Atlas_Engineering_GOEM_Retail", "Atlas_Engineering_HP", "Atlas_Engineering_Dell", "Atlas_Engineering_Lenovo",
     "Atlas_Engineering_Microsoft", "Atlas_Production_GOEM", "Atlas_Production_HP", "Atlas_Production_Dell",
     "Atlas_Production_Lenovo", "Atlas_Production_Microsoft", "CalypsoX2_Engineering_GOEM", 'CalypsoX2_Engineering_XBOX',
+    "AtlasR_AO0XXUCO", "AtlasR_AO0XXSCO", "AtlasR_AO0XXUCS", "AtlasR_AO0XXSCS",
 ]
 
 
@@ -29,6 +30,14 @@ class HomeWindow(object):
 
     def open_calx2_eng(self):
         from calx2_bot_eng import Ui_OtherWindow
+        self.bot_window = QtWidgets.QMainWindow()
+        self.ui = Ui_OtherWindow()
+        self.ui.setupUi(self.bot_window)
+        self.bot_window.show()
+        MainWindow.hide()
+
+    def open_atlasr_window(self):
+        from atlasr_bot import Ui_OtherWindow
         self.bot_window = QtWidgets.QMainWindow()
         self.ui = Ui_OtherWindow()
         self.ui.setupUi(self.bot_window)
@@ -165,6 +174,26 @@ class HomeWindow(object):
             self.open_calx2_eng()
             f = open(r"C:\Users\Public\log.txt", "a+")
             f.write(f"Base_fw: {home_list[11]}\n")
+            f.close()
+        elif item.text() == "AtlasR_AO0XXUCO":
+            self.open_calx2_eng()
+            f = open(r"C:\Users\Public\log.txt", "a+")
+            f.write(f"Base_fw: {home_list[12]}\n")
+            f.close()
+        elif item.text() == "AtlasR_AO0XXSCO":
+            self.open_calx2_eng()
+            f = open(r"C:\Users\Public\log.txt", "a+")
+            f.write(f"Base_fw: {home_list[13]}\n")
+            f.close()
+        elif item.text() == "AtlasR_AO0XXUCS":
+            self.open_calx2_eng()
+            f = open(r"C:\Users\Public\log.txt", "a+")
+            f.write(f"Base_fw: {home_list[14]}\n")
+            f.close()
+        elif item.text() == "AtlasR_AO0XXSCS":
+            self.open_calx2_eng()
+            f = open(r"C:\Users\Public\log.txt", "a+")
+            f.write(f"Base_fw: {home_list[15]}\n")
             f.close()
         else:
             print('Please restart the program.')
